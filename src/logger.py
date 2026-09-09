@@ -8,7 +8,7 @@ def log_decision(filename, method, label, folder):
 
     file_exists = log_file.exists()
 
-    with open(log_file, "a", newline="") as f:
+    with open(log_file, "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
 
         if not file_exists:
