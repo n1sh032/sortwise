@@ -4,6 +4,19 @@ from pathlib import Path
 from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
+from classifier import classify_image
+
+image_extensions = [".jpg", ".jpeg", ".png"]
+
+# clip labels dont match folder names exactly, so we need this
+label_to_folder = {
+    "a screenshot": "screenshots",
+    "a meme": "memes",
+    "a receipt": "receipts",
+    "a photo of a person": "photos",
+    "a document scan": "documents",
+    "a nature or landscape photo": "photos"
+}
 
 class SorterHandler(FileSystemEventHandler):
 
@@ -14,15 +27,20 @@ class SorterHandler(FileSystemEventHandler):
         filepath = Path(event.src_path)
         ext = filepath.suffix.lower()
 
-        folder_name = sorting_rules.get(ext)
+        time.sleep(1)
+
+        if ext in image_extensions:
+            label = classify_image(filepath)
+            folder_name = label_to_folder.get(label, "images")
+        else:
+            folder_name = sorting_rules.get(ext)
+
         if folder_name == None:
             print("no rule for", ext, "-", filepath.name)
             return
 
         dest = watch_folder / folder_name
         dest.mkdir(exist_ok=True)
-
-        time.sleep(1)   # wait a bit so the file finishes downloading first
 
         try:
             shutil.move(str(filepath), str(dest / filepath.name))
