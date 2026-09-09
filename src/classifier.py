@@ -29,3 +29,17 @@ def classify_image(filepath):
     best_label = image_labels[best_index]
 
     return best_label
+
+def get_embedding(filepath):
+
+    img = Image.open(filepath)
+    inputs = processor(images=img, return_tensors="pt")
+
+    image_features = model.get_image_features(pixel_values=inputs["pixel_values"])
+
+    # transformers 5.x wraps the result in an object instead of returning
+    # a plain tensor, this handles both cases so it works either way
+    if hasattr(image_features, "pooler_output"):
+        image_features = image_features.pooler_output
+
+    return image_features.detach().numpy()[0]
