@@ -7,7 +7,8 @@ from sorter import SorterHandler
 def main():
 
     obs = Observer()
-    obs.schedule(SorterHandler(), str(watch_folder), recursive=False)
+    handler = SorterHandler()
+    obs.schedule(handler, str(watch_folder), recursive=False)
     obs.start()
 
     print("watching", watch_folder)
@@ -21,6 +22,7 @@ def main():
         obs.stop()
 
     obs.join()
+    handler.workers.shutdown(cancel_futures=True)
 
 if __name__=="__main__":
     main()

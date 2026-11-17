@@ -4,7 +4,6 @@ from pathlib import Path
 from sklearn.linear_model import LogisticRegression
 
 from config import watch_folder
-from classifier import get_embedding
 
 log_file = Path("sort_log.csv")
 
@@ -13,7 +12,7 @@ def load_corrections():
     embeddings = []
     labels = []
 
-    with open(log_file, "r") as f:
+    with open(log_file, "r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
 
         for row in reader:
@@ -25,8 +24,16 @@ def load_corrections():
                 # need to find the file again since it moved after the correction
                 filepath = watch_folder / correct_folder / filename
 
-                if filepath.exists():
-                    emb = get_embedding(filepath)
+                if filepath.suffix.lower() not in {".jpg", ".jpeg", ".png"}:
+                    continue
+                if filepath.is_file():
+                    try:
+                        from classifier import get_embedding
+
+                        emb = get_embedding(filepath)
+                    except Exception as exc:
+                        print("skipping", filename, "-", exc)
+                        continue
                     embeddings.append(emb)
                     labels.append(correct_folder)
                 else:
@@ -40,7 +47,7 @@ if __name__ == "__main__":
 
     print("found", len(X), "correction examples")
 
-    if len(X) < 5:
+    if len(X) < 5 or len(set(y)) < 2:
         print("not enough data yet, keep using correct.py when clip gets things wrong")
     else:
         clf = LogisticRegression(max_iter=1000)

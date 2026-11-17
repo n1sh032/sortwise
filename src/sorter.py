@@ -1,10 +1,14 @@
 import time
 import shutil
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from threading import Lock
 from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
 from logger import log_decision
+
+move_lock = Lock()
 
 image_extensions = [".jpg", ".jpeg", ".png"]
 pdf_extensions = [".pdf"]
@@ -49,6 +53,21 @@ def wait_until_ready(filepath, timeout=60, stable_checks=3, interval=1):
     return False
 
 
+def classify(filepath):
+    ext = filepath.suffix.lower()
+    if ext in image_extensions:
+        from classifier import classify_image
+
+        label = classify_image(filepath)
+        return "clip", label, label_to_folder.get(label, "images")
+    if ext in pdf_extensions:
+        from doc_classifier import classify_document
+
+        label = classify_document(filepath)
+        return "doc_clip", label, doc_label_to_folder.get(label, "documents")
+    return "rule", ext, sorting_rules.get(ext, "misc")
+
+
 def sort_file(filepath):
 
     # skip temp/lock files that office apps create while a file is open
@@ -56,33 +75,20 @@ def sort_file(filepath):
         ".part", ".crdownload", ".download", ".tmp",
     }:
         return
-    if not wait_until_ready(filepath):
-        return
-
     try:
-        ext = filepath.suffix.lower()
-        if ext in image_extensions:
-            from classifier import classify_image
-
-            label = classify_image(filepath)
-            folder_name = label_to_folder.get(label, "images")
-            method = "clip"
-        elif ext in pdf_extensions:
-            from doc_classifier import classify_document
-
-            label = classify_document(filepath)
-            folder_name = doc_label_to_folder.get(label, "documents")
-            method = "doc_clip"
-        else:
-            label = ext
-            folder_name = sorting_rules.get(ext, "misc")
-            method = "rule"
-
-        dest = watch_folder / folder_name
-        dest.mkdir(exist_ok=True)
-        destination = unique_destination(dest / filepath.name)
-        shutil.move(str(filepath), str(destination))
-        log_decision(destination.name, method, label, folder_name)
+        if not wait_until_ready(filepath):
+            return
+        with move_lock:
+            method, label, folder_name = classify(filepath)
+            dest = watch_folder / folder_name
+            dest.mkdir(exist_ok=True)
+            destination = unique_destination(dest / filepath.name)
+            shutil.move(str(filepath), str(destination))
+            try:
+                log_decision(destination.name, method, label, folder_name)
+            except OSError as e:
+                print("moved", destination, "but could not write the log:", e)
+                return
         print("moved", filepath.name, "->", folder_name)
     except Exception as e:
         print("failed to classify or move", filepath.name, "-", e)
@@ -99,15 +105,33 @@ def unique_destination(destination):
         index += 1
 
 class SorterHandler(FileSystemEventHandler):
+    def __init__(self):
+        self.workers = ThreadPoolExecutor(max_workers=4)
+        self.pending = set()
+        self.lock = Lock()
+
+    def submit(self, path):
+        with self.lock:
+            if path in self.pending:
+                return
+            self.pending.add(path)
+        self.workers.submit(self.process, path)
+
+    def process(self, path):
+        try:
+            sort_file(path)
+        finally:
+            with self.lock:
+                self.pending.discard(path)
 
     def on_created(self, event):
         if event.is_directory:
             return
 
         filepath = Path(event.src_path)
-        sort_file(filepath)
+        self.submit(filepath)
 
     def on_moved(self, event):
         path = Path(event.dest_path)
         if not event.is_directory and path.parent.resolve() == watch_folder.resolve():
-            sort_file(path)
+            self.submit(path)
