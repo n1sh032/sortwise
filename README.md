@@ -6,17 +6,20 @@ of just watching tutorials without building anything.
 
 ## how it works right now
 
-- watches the downloads folder in real time and sorts new files as they come in
+- watches the downloads folder and waits for a file size to stay stable before sorting
 - images get classified by CLIP (screenshot / meme / receipt / photo / etc)
   instead of just going by file extension
 - pdfs get their text read and classified too (receipt / resume / manual / etc)
 - everything else falls back to simple extension based rules, with a "misc"
   folder for anything not covered
 - every sort decision gets logged to sort_log.csv
-- if the model gets something wrong, correct.py lets you fix it and logs
-  the correction as training data
-- train.py trains a small classifier on those corrections once there's
-  enough of them (still collecting data on this)
+- if the model gets something wrong, correct.py lets you move it and logs
+  the correction as training data. If the same filename is in multiple folders,
+  it lists the matching paths and asks you to use a unique filename.
+- train.py can fit a classifier from corrections, but that model is experimental:
+  the sorting workflow does not load or use it yet
+- corrupt/unreadable files and classifier errors are reported per file; the
+  watcher keeps running and leaves a file in place when processing fails
 
 ## files
 
@@ -47,6 +50,11 @@ python src/main.py
 
 drop a file into your downloads folder while it's running and it should
 sort itself.
+
+The watcher waits for three consecutive one-second checks with an unchanged
+file size (up to 60 seconds). This is a practical download-completion heuristic,
+not a guarantee for every sync client. Failed classification leaves the file
+in Downloads for manual review.
 
 to sort everything already sitting in downloads:
 

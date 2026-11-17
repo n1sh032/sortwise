@@ -9,13 +9,19 @@ def find_file(filename):
 
     # looks through all the subfolders inside watch_folder
     # since we dont know which folder clip put it in
+    matches = []
     for folder in watch_folder.iterdir():
         if folder.is_dir():
             possible_path = folder / filename
             if possible_path.exists():
-                return possible_path
+                matches.append(possible_path)
 
-    return None
+    if len(matches) > 1:
+        print("ambiguous filename; found:")
+        for match in matches:
+            print(" -", match.relative_to(watch_folder))
+        return None
+    return matches[0] if matches else None
 
 if __name__ == "__main__":
 
