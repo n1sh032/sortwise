@@ -1,11 +1,11 @@
 import time
-import shutil
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from threading import Lock
 from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
+from file_move import move_without_overwrite
 from logger import log_decision
 
 move_lock = Lock()
@@ -82,8 +82,13 @@ def sort_file(filepath):
             method, label, folder_name = classify(filepath)
             dest = watch_folder / folder_name
             dest.mkdir(exist_ok=True)
-            destination = unique_destination(dest / filepath.name)
-            shutil.move(str(filepath), str(destination))
+            while True:
+                destination = unique_destination(dest / filepath.name)
+                try:
+                    move_without_overwrite(filepath, destination)
+                    break
+                except FileExistsError:
+                    continue
             try:
                 log_decision(destination.name, method, label, folder_name)
             except OSError as e:
@@ -95,12 +100,12 @@ def sort_file(filepath):
 
 
 def unique_destination(destination):
-    if not destination.exists():
+    if not destination.exists() and not destination.is_symlink():
         return destination
     index = 1
     while True:
         candidate = destination.with_name(f"{destination.stem} ({index}){destination.suffix}")
-        if not candidate.exists():
+        if not candidate.exists() and not candidate.is_symlink():
             return candidate
         index += 1
 

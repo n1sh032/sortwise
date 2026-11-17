@@ -1,6 +1,24 @@
 from pathlib import Path
 
 import sorter
+import pytest
+from file_move import move_without_overwrite
+
+
+def test_move_does_not_replace_existing_destination(tmp_path):
+    source = tmp_path / "source.txt"
+    destination = tmp_path / "destination.txt"
+    source.write_text("source")
+    destination.write_text("destination")
+    with pytest.raises(FileExistsError):
+        move_without_overwrite(source, destination)
+    assert source.read_text() == "source"
+    assert destination.read_text() == "destination"
+
+    destination.unlink()
+    move_without_overwrite(source, destination)
+    assert not source.exists()
+    assert destination.read_text() == "source"
 
 
 def test_wait_until_ready_waits_for_repeated_stable_sizes(tmp_path, monkeypatch):

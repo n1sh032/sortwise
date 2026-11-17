@@ -1,8 +1,8 @@
 import sys
-import shutil
 from pathlib import Path
 
 from config import watch_folder
+from file_move import move_without_overwrite
 from logger import log_decision
 
 def find_file(filename):
@@ -54,9 +54,10 @@ if __name__ == "__main__":
     old_folder = filepath.parent.name
 
     filename = filepath.name
-    if (dest / filename).exists():
+    try:
+        move_without_overwrite(filepath, dest / filename)
+    except FileExistsError:
         sys.exit("destination already contains that filename")
-    shutil.move(str(filepath), str(dest / filename))
 
     log_decision(filename, "correction", old_folder, correct_folder)
 
