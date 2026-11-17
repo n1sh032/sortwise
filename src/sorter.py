@@ -44,7 +44,7 @@ def wait_until_ready(filepath, timeout=60, stable_checks=3, interval=1):
             if stable >= stable_checks:
                 return True
         else:
-            stable = 0
+            stable = 1
             last_size = size
         time.sleep(interval)
     print("skipping", filepath.name, "- download did not finish before timeout")
