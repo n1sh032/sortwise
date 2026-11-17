@@ -6,6 +6,12 @@ from config import watch_folder
 from logger import log_decision
 
 def find_file(filename):
+    selected = Path(filename)
+    if len(selected.parts) == 2 and not selected.anchor and ".." not in selected.parts:
+        path = watch_folder / selected
+        return path if path.is_file() and path.resolve().is_relative_to(watch_folder.resolve()) else None
+    if len(selected.parts) != 1 or selected.anchor or selected.name in {"", ".."}:
+        return None
 
     # looks through all the subfolders inside watch_folder
     # since we dont know which folder clip put it in
@@ -26,11 +32,13 @@ def find_file(filename):
 if __name__ == "__main__":
 
     if len(sys.argv) != 3:
-        print("usage: python correct.py filename correct_folder")
+        print("usage: python src/correct.py filename-or-folder/filename correct_folder")
         sys.exit()
 
     filename = sys.argv[1]
     correct_folder = sys.argv[2]
+    if Path(correct_folder).name != correct_folder or correct_folder in {"", ".", ".."}:
+        sys.exit("choose a single destination folder name")
 
     filepath = find_file(filename)
 
@@ -39,10 +47,15 @@ if __name__ == "__main__":
         sys.exit()
 
     dest = watch_folder / correct_folder
+    if not dest.resolve().is_relative_to(watch_folder.resolve()):
+        sys.exit("destination must be inside Downloads")
     dest.mkdir(exist_ok=True)
 
     old_folder = filepath.parent.name
 
+    filename = filepath.name
+    if (dest / filename).exists():
+        sys.exit("destination already contains that filename")
     shutil.move(str(filepath), str(dest / filename))
 
     log_decision(filename, "correction", old_folder, correct_folder)

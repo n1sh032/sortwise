@@ -4,8 +4,6 @@ from pathlib import Path
 from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
-from classifier import classify_image
-from doc_classifier import classify_document
 from logger import log_decision
 
 image_extensions = [".jpg", ".jpeg", ".png"]
@@ -54,16 +52,24 @@ def wait_until_ready(filepath, timeout=60, stable_checks=3, interval=1):
 def sort_file(filepath):
 
     # skip temp/lock files that office apps create while a file is open
-    if filepath.name.startswith("~$"):
+    if filepath.name.startswith("~$") or filepath.suffix.lower() in {
+        ".part", ".crdownload", ".download", ".tmp",
+    }:
+        return
+    if not wait_until_ready(filepath):
         return
 
     try:
         ext = filepath.suffix.lower()
         if ext in image_extensions:
+            from classifier import classify_image
+
             label = classify_image(filepath)
             folder_name = label_to_folder.get(label, "images")
             method = "clip"
         elif ext in pdf_extensions:
+            from doc_classifier import classify_document
+
             label = classify_document(filepath)
             folder_name = doc_label_to_folder.get(label, "documents")
             method = "doc_clip"
@@ -99,5 +105,9 @@ class SorterHandler(FileSystemEventHandler):
             return
 
         filepath = Path(event.src_path)
-        if wait_until_ready(filepath):
-            sort_file(filepath)
+        sort_file(filepath)
+
+    def on_moved(self, event):
+        path = Path(event.dest_path)
+        if not event.is_directory and path.parent.resolve() == watch_folder.resolve():
+            sort_file(path)
