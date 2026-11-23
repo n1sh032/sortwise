@@ -1,8 +1,9 @@
 import csv
 from pathlib import Path
 from datetime import datetime
+from config import project_root
 
-log_file = Path("sort_log.csv")
+log_file = project_root / "sort_log.csv"
 
 def log_decision(filename, method, label, folder):
 

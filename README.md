@@ -45,3 +45,13 @@ The safety suite passed **4 tests** for download readiness, duplicate filenames,
 $env:PYTHONPATH = "src"
 .\.venv\Scripts\python.exe -m pytest -q tests/test_sorter_safety.py
 ```
+
+## Browser workspace
+
+Run `python src/web.py` and open [Sortwise](http://sortwise.localhost:8012).
+Use `--folder "C:\\path\\to\\scratch"` to choose a scratch directory, or set
+`SORTWISE_FOLDER` before starting either entry point. Refresh the file list,
+select files, then approve sorting. Activity shows the outcome for each file.
+The CSV log is stored in the repository root regardless of the launch folder.
+
+See [architecture and development](docs/ARCHITECTURE.md).
