@@ -74,13 +74,15 @@ def sort_file(filepath):
     if filepath.name.startswith("~$") or filepath.suffix.lower() in {
         ".part", ".crdownload", ".download", ".tmp",
     }:
-        return
+        return {"file": filepath.name, "status": "skipped", "message": "Temporary file"}
     try:
         if not wait_until_ready(filepath):
-            return
+            return {"file": filepath.name, "status": "skipped", "message": "File not ready"}
         with move_lock:
             method, label, folder_name = classify(filepath)
             dest = watch_folder / folder_name
+            if dest.is_symlink() or not dest.resolve().is_relative_to(watch_folder.resolve()):
+                raise ValueError("Category folder must stay inside the watch folder")
             dest.mkdir(exist_ok=True)
             while True:
                 destination = unique_destination(dest / filepath.name)
@@ -93,10 +95,13 @@ def sort_file(filepath):
                 log_decision(destination.name, method, label, folder_name)
             except OSError as e:
                 print("moved", destination, "but could not write the log:", e)
-                return
+                return {"file": filepath.name, "status": "moved", "destination": str(destination),
+                        "message": "Move completed, log write failed"}
         print("moved", filepath.name, "->", folder_name)
+        return {"file": filepath.name, "status": "moved", "destination": str(destination)}
     except Exception as e:
         print("failed to classify or move", filepath.name, "-", e)
+        return {"file": filepath.name, "status": "error", "message": str(e)}
 
 
 def unique_destination(destination):

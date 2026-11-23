@@ -11,3 +11,4 @@ test_image.jpg
 # os junk
 .DS_Store
 Thumbs.db
+.local/
