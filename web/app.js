@@ -3,6 +3,7 @@ const $ = (id) => document.getElementById(id);
 let busy = false;
 let revision = -1;
 let latest = null;
+let fileCount = 0;
 async function send(action, payload = {}) {
   if (busy) return;
   try {
@@ -60,6 +61,8 @@ function showInfo(app) {
 function render(r) {
   if (r.error) return;
   if (r.files) {
+    fileCount = r.total;
+    $("file-count").textContent = fileCount;
     $("files").replaceChildren();
     for (const file of r.files) {
       const label = document.createElement("label");
@@ -67,18 +70,23 @@ function render(r) {
       const box = document.createElement("input");
       box.type = "checkbox";
       box.value = file.name;
-      label.append(
-        box,
-        document.createTextNode(
-          file.name + " · " + Math.ceil(file.bytes / 1024) + " KB",
-        ),
-      );
+      const icon = document.createElement("span");
+      icon.className = "file-symbol";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = file.name.split(".").pop().slice(0, 4).toUpperCase();
+      const name = document.createElement("span");
+      name.className = "filename";
+      name.textContent = file.name;
+      const size = document.createElement("small");
+      size.textContent = Math.ceil(file.bytes / 1024) + " KB";
+      label.append(box, icon, name, size);
       $("files").append(label);
     }
     $("output").textContent = r.total + " files found. Showing up to 200.";
   } else if (r.outcomes) {
     for (const outcome of r.outcomes) {
       if (outcome.status === "moved") {
+        fileCount = Math.max(0, fileCount - 1);
         for (const box of document.querySelectorAll("#files input")) {
           if (box.value === outcome.file) box.parentElement.remove();
         }
@@ -90,6 +98,7 @@ function render(r) {
           o.file + " — " + o.status + "\n" + (o.destination || o.message || ""),
       )
       .join("\n\n");
+    $("file-count").textContent = fileCount;
   }
 }
 $("scan").addEventListener("click", () => send("scan"));
