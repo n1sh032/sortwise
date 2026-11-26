@@ -82,8 +82,13 @@ def sort_file(filepath):
             method, label, folder_name = classify(filepath)
             dest = watch_folder / folder_name
             dest.mkdir(exist_ok=True)
-            destination = unique_destination(dest / filepath.name)
-            shutil.move(str(filepath), str(destination))
+            while True:
+                destination = unique_destination(dest / filepath.name)
+                try:
+                    move_without_overwrite(filepath, destination)
+                    break
+                except FileExistsError:
+                    continue
             try:
                 log_decision(destination.name, method, label, folder_name)
             except OSError as e:
