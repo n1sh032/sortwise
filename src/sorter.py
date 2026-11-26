@@ -89,9 +89,6 @@ def sort_file(filepath):
             except OSError as e:
                 print("moved", destination, "but could not write the log:", e)
                 return
-        dest = watch_folder / folder_name
-        dest.mkdir(exist_ok=True)
-        destination = unique_destination(dest / filepath.name)
         shutil.move(str(filepath), str(destination))
         log_decision(destination.name, method, label, folder_name)
         print("moved", filepath.name, "->", folder_name)
