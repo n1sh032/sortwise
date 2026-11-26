@@ -28,3 +28,6 @@ def load_corrections():
                 if filepath.exists():
                     emb = get_embedding(filepath)
                     embeddings.append(emb)
+                    labels.append(correct_folder)
+                else:
+                    print("skipping", filename, "- file not found anymore")
