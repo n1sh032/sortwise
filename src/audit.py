@@ -14,6 +14,9 @@ def audit_folder(folder_path):
         except Exception as exc:
             print("could not classify", filepath.name, "-", exc)
             continue
+        if expected != folder_path.name:
+            flagged.append((filepath.name, folder_path.name, expected))
+    return flagged
 
     current_folder_name = folder_path.name
     flagged = []
