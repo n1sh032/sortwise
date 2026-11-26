@@ -46,3 +46,5 @@ if __name__ == "__main__":
         clf = LogisticRegression(max_iter=1000)
         clf.fit(X, y)
 
+        joblib.dump(clf, "my_classifier.pkl")
+        print("model saved to my_classifier.pkl")
