@@ -22,3 +22,6 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("usage: python correct.py filename correct_folder")
         sys.exit()
+
+    filename = sys.argv[1]
+    correct_folder = sys.argv[2]
