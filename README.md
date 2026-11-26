@@ -1,73 +1,47 @@
-# sortwise
+# Sortwise
 
-my downloads folder is always a mess so i'm building a script that watches it
-and auto-sorts files. also using this as a way to actually learn ML instead
-of just watching tutorials without building anything.
+Sortwise watches a folder and moves completed downloads into categories. It uses CLIP for JPEG and PNG images, a text classifier for PDFs with extractable text, and extension rules for other files. You can review decisions and correct them yourself.
 
-## how it works right now
+## Setup
 
-- watches the downloads folder and waits for a file size to stay stable before sorting
-- images get classified by CLIP (screenshot / meme / receipt / photo / etc)
-  instead of just going by file extension
-- pdfs get their text read and classified too (receipt / resume / manual / etc)
-- everything else falls back to simple extension based rules, with a "misc"
-  folder for anything not covered
-- every sort decision gets logged to sort_log.csv
-- if the model gets something wrong, correct.py lets you move it and logs
-  the correction as training data. If the same filename is in multiple folders,
-  it lists the matching paths. Pass a path like `receipts/report.pdf` to select one.
-- train.py can fit a classifier from corrections, but that model is experimental:
-  the sorting workflow does not load or use it yet
-- corrupt/unreadable files and classifier errors are reported per file; the
-  watcher keeps running and leaves a file in place when processing fails
+Use Python with working PyTorch and Transformers builds. On Windows, use a folder on NTFS. The source and destination must be on the same volume and support hard links. The first image or PDF classification needs internet access to download the model weights unless they are already cached.
 
-## files
+Run these commands from the repository root in PowerShell:
 
-- `config.py` - settings, which folder to watch, the extension rules
-- `sorter.py` - the actual sorting logic, handles new files as they appear
-- `classifier.py` - CLIP setup and image classification
-- `doc_classifier.py` - pdf text extraction and classification
-- `logger.py` - writes every decision to sort_log.csv
-- `correct.py` - manually fix a wrong sort and log it as a correction
-- `train.py` - trains a classifier on logged corrections
-- `bulk_sort.py` - one time script to sort files already sitting in downloads
-- `audit.py` - checks already-sorted files against what the model thinks
-  they should be, doesn't move anything automatically
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
 
-## what i tried and removed
+By default Sortwise watches your home folder's `Downloads` directory. To try it safely, create a scratch folder and set `watch_folder` in [src/config.py](src/config.py) to that folder. Use copies of a few files.
 
-originally had a version that auto-detected corrections by watching for
-files being manually dragged between sorted folders. scrapped it because
-it couldn't tell the difference between an actual correction and just
-reorganizing files for some unrelated reason, so it was logging bad data.
-manual correct.py is slower but way more reliable.
+## Watch, audit and correct
 
-## how to run it
+```powershell
+.\.venv\Scripts\python.exe src/main.py
+```
 
-pip install -r requirements.txt
-python src/main.py
+With the watcher running, copy a test `.txt` file into the watched folder. Once its size stabilizes, it should land in `misc`. Check `sort_log.csv` in the directory where you ran the command. Press Ctrl+C to stop. To process files already present, run `src/bulk_sort.py` instead.
 
+```powershell
+.\.venv\Scripts\python.exe src/audit.py "$HOME\Downloads\receipts"
+.\.venv\Scripts\python.exe src/correct.py "receipts/report.pdf" documents
+```
 
-drop a file into your downloads folder while it's running and it should
-sort itself.
+The audit reports suggested moves. The correction command moves one file and logs it. Use `folder/filename` when a basename is shared by several folders. The path in the audit example assumes the default watch folder.
 
-The watcher waits for three consecutive one-second checks with an unchanged
-file size (up to 60 seconds). This is a practical download-completion heuristic,
-not a guarantee for every sync client. Failed classification leaves the file
-in Downloads for manual review.
+## How sorting works
 
-Moves use a filesystem hard link to reserve the new name without overwriting
-another file. The source and destination must be on the same volume and the
-filesystem must support hard links (for example, NTFS).
+The watcher queues new files and browser rename events. It skips common temporary extensions and requires three size readings in a row to match before sorting. A slow download can pause long enough to pass that check, and a file that never settles within the timeout is left for review. Classification errors are reported per file. Sortwise reserves a destination with a hard link before removing the original name, so a duplicate filename gets a numbered suffix.
 
-to sort everything already sitting in downloads:
+PDF classification uses extracted text. Image-only PDFs do not get OCR. The optional `src/train.py` experiment fits a classifier from usable image corrections, with at least five examples across two classes. The watcher still uses the default models.
 
-python src/bulk_sort.py
+## Working proof
 
+The safety suite passed **4 tests** for download readiness, duplicate filenames, exact correction paths and overwrite prevention. A scratch-file smoke check also moved `example.txt` into `misc` and verified the row in `sort_log.csv`. These checks exercise file handling without loading CLIP or the PDF model. The walkthrough above checks the watcher with your own files.
 
-## why
-
-wanted a project where the ML part is actually doing something useful, not
-just a jupyter notebook that ends after the accuracy score. learned watchdog,
-zero-shot classification with CLIP, and how to structure a project that
-actually improves itself over time instead of being static.
+```powershell
+.\.venv\Scripts\python.exe -m pip install pytest
+$env:PYTHONPATH = "src"
+.\.venv\Scripts\python.exe -m pytest -q tests/test_sorter_safety.py
+```
