@@ -2,7 +2,6 @@ import time
 import shutil
 from pathlib import Path
 from watchdog.events import FileSystemEventHandler
-from logger import log_decision
 
 from config import watch_folder, sorting_rules
 from classifier import classify_image
