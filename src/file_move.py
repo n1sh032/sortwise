@@ -10,3 +10,4 @@ def move_without_overwrite(source, destination):
         source.unlink()
     except OSError:
         destination.unlink()
+        raise
