@@ -3,14 +3,6 @@ from pathlib import Path
 
 from sorter import classify, image_extensions, pdf_extensions
 
-doc_label_to_folder = {
-    "a receipt": "receipts",
-    "an important document": "important",
-    "a resume": "important",
-    "a manual or instructions": "documents",
-    "an article or blog post": "documents",
-    "a form to fill out": "important"
-}
 
 def audit_folder(folder_path):
 
