@@ -2,6 +2,7 @@ import time
 import shutil
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from threading import Lock
 from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
