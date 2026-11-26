@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 
 from config import project_root, watch_folder
 
-log_file = Path("sort_log.csv")
+log_file = project_root / "sort_log.csv"
 
 def load_corrections():
 
