@@ -1,9 +1,7 @@
 import argparse
 from pathlib import Path
 
-from config import watch_folder
-from classifier import classify_image
-from doc_classifier import classify_document
+from sorter import classify, image_extensions, pdf_extensions
 
 image_extensions = [".jpg", ".jpeg", ".png"]
 pdf_extensions = [".pdf"]
