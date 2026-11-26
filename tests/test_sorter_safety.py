@@ -31,3 +31,4 @@ def test_find_file_reports_duplicate_names(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(correct, "watch_folder", tmp_path)
 
     assert correct.find_file("same.pdf") is None
+    assert "receipts/same.pdf" in capsys.readouterr().out
