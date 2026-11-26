@@ -50,3 +50,8 @@ class SorterHandler(FileSystemEventHandler):
             print("failed to move", filepath.name, e)
         if ext in image_extensions:
             label = classify_image(filepath)
+            folder_name = label_to_folder.get(label, "images")
+            log_decision(filepath.name, "clip", label, folder_name)
+        else:
+            folder_name = sorting_rules.get(ext)
+            log_decision(filepath.name, "rule", ext, folder_name)
