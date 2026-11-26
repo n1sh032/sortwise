@@ -9,6 +9,7 @@ def find_file(filename):
 
     # looks through all the subfolders inside watch_folder
     # since we dont know which folder clip put it in
+    matches = []
     for folder in watch_folder.iterdir():
         if folder.is_dir():
             possible_path = folder / filename
