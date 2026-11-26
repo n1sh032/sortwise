@@ -65,6 +65,9 @@ def classify(filepath):
 
         label = classify_document(filepath)
         return "doc_clip", label, doc_label_to_folder.get(label, "documents")
+    return "rule", ext, sorting_rules.get(ext, "misc")
+
+
 def sort_file(filepath):
 
     # skip temp/lock files that office apps create while a file is open
