@@ -54,7 +54,9 @@ if __name__ == "__main__":
     old_folder = filepath.parent.name
 
     filename = filepath.name
-    if (dest / filename).exists():
+    try:
+        move_without_overwrite(filepath, dest / filename)
+    except FileExistsError:
         sys.exit("destination already contains that filename")
     shutil.move(str(filepath), str(dest / filename))
 
