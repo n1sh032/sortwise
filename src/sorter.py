@@ -5,6 +5,7 @@ from threading import Lock
 from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
+from file_move import move_without_overwrite
 from logger import log_decision
 
 move_lock = Lock()
