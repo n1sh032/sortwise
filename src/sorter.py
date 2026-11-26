@@ -13,3 +13,9 @@ class SorterHandler(FileSystemEventHandler):
 
         filepath = Path(event.src_path)
         ext = filepath.suffix.lower()
+
+        folder_name = sorting_rules.get(ext)
+        if folder_name == None:
+            print("no rule for", ext, "-", filepath.name)
+            return
+
