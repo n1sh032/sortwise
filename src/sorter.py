@@ -47,6 +47,12 @@ def sort_file(filepath):
         folder_name = doc_label_to_folder.get(label, "documents")
         log_decision(filepath.name, "doc_clip", label, folder_name)
 
+    else:
+        # anything not covered by a rule goes into misc instead of
+        # just getting skipped forever
+        folder_name = sorting_rules.get(ext, "misc")
+        log_decision(filepath.name, "rule", ext, folder_name)
+
 class SorterHandler(FileSystemEventHandler):
 
     def on_created(self, event):
