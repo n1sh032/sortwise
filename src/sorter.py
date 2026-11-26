@@ -32,6 +32,15 @@ doc_label_to_folder = {
 def wait_until_ready(filepath, timeout=60, stable_checks=3, interval=1):
     """Wait until a download exists and its size stays unchanged."""
     deadline = time.monotonic() + timeout
+    last_size = None
+    stable = 0
+    while time.monotonic() < deadline:
+        try:
+            size = filepath.stat().st_size
+        except FileNotFoundError:
+            return False
+        if size == last_size:
+            stable += 1
 def sort_file(filepath):
 
     # skip temp/lock files that office apps create while a file is open
