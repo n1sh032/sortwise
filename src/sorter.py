@@ -82,6 +82,9 @@ def sort_file(filepath):
         print("failed to classify or move", filepath.name, "-", e)
 
 
+def unique_destination(destination):
+    if not destination.exists():
+        return destination
 
 class SorterHandler(FileSystemEventHandler):
 
