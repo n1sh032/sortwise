@@ -24,8 +24,9 @@ def load_corrections():
                 # need to find the file again since it moved after the correction
                 filepath = watch_folder / correct_folder / filename
 
-                if filepath.exists():
-                    emb = get_embedding(filepath)
+                if filepath.suffix.lower() not in {".jpg", ".jpeg", ".png"}:
+                    continue
+                if filepath.is_file():
                     embeddings.append(emb)
                     labels.append(correct_folder)
                 else:
