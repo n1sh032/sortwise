@@ -1,0 +1,13 @@
+# python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# this project's own stuff that shouldnt be public
+sort_log.csv
+test_image.jpg
+
+# os junk
+.DS_Store
+Thumbs.db
