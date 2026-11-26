@@ -15,4 +15,7 @@ sorting_rules = {
 
     ".py": "code", ".c": "code",
 
+    ".zip": "archives", ".rar": "archives", ".jar": "archives",
+
+    ".exe": "installers", ".msi": "installers", ".msix": "installers",
 }
