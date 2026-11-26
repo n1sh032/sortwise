@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sortwise</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="logo">Sortwise</div>
+        <p id="connection">Connecting…</p>
+      </header>
+      <h1>Give every file a place.</h1>
+      <p class="lead">
+        Inspect your folder, select the files you want to organize, then review
+        where they went.
+      </p>
+      <p id="status" role="status">Connecting…</p>
+      <div class="layout">
+        <section class="panel" aria-label="Workspace">
+          <p class="hint" id="folder">Loading folder…</p>
+          <div class="actions">
+            <button data-action id="scan">Refresh files</button
+            ><button data-action id="sort" class="secondary">
+              Sort selected files
+            </button>
+          </div>
+          <p class="hint">
+            Images and PDFs use local models. The first classification may
+            download model weights.
+          </p>
+          <div id="files" class="files">
+            <p>Refresh to see files in your configured folder.</p>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>Activity</h2>
+          <pre id="output" aria-live="polite">
+Select files to sort and their results will appear here.</pre
+          >
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
