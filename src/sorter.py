@@ -56,6 +56,8 @@ def sort_file(filepath):
         ".part", ".crdownload", ".download", ".tmp",
     }:
         return
+    if not wait_until_ready(filepath):
+        return
 
     try:
         ext = filepath.suffix.lower()
