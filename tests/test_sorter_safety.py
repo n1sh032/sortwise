@@ -7,6 +7,9 @@ from file_move import move_without_overwrite
 
 def test_move_does_not_replace_existing_destination(tmp_path):
     source = tmp_path / "source.txt"
+    destination = tmp_path / "destination.txt"
+    source.write_text("source")
+    destination.write_text("destination")
 
 
 def test_wait_until_ready_waits_for_repeated_stable_sizes(tmp_path, monkeypatch):
