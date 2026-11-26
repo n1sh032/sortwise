@@ -31,3 +31,6 @@ def load_corrections():
                     labels.append(correct_folder)
                 else:
                     print("skipping", filename, "- file not found anymore")
+
+    return embeddings, labels
+
