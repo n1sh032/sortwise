@@ -22,6 +22,7 @@ def main():
         obs.stop()
 
     obs.join()
+    handler.workers.shutdown(cancel_futures=True)
 
 if __name__=="__main__":
     main()
