@@ -37,3 +37,6 @@ def load_corrections():
 if __name__ == "__main__":
 
     X, y = load_corrections()
+
+    print("found", len(X), "correction examples")
+
