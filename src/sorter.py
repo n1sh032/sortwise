@@ -89,8 +89,6 @@ def sort_file(filepath):
             except OSError as e:
                 print("moved", destination, "but could not write the log:", e)
                 return
-        shutil.move(str(filepath), str(destination))
-        log_decision(destination.name, method, label, folder_name)
         print("moved", filepath.name, "->", folder_name)
     except Exception as e:
         print("failed to classify or move", filepath.name, "-", e)
