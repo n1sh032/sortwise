@@ -68,6 +68,8 @@ def sort_file(filepath):
             folder_name = label_to_folder.get(label, "images")
             method = "clip"
         elif ext in pdf_extensions:
+            from doc_classifier import classify_document
+
             label = classify_document(filepath)
             folder_name = doc_label_to_folder.get(label, "documents")
             method = "doc_clip"
