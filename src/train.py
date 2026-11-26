@@ -34,3 +34,6 @@ def load_corrections():
 
     return embeddings, labels
 
+if __name__ == "__main__":
+
+    X, y = load_corrections()
