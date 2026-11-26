@@ -37,3 +37,6 @@ def audit_folder(folder_path):
 
         ext = filepath.suffix.lower()
 
+        if ext in image_extensions:
+            print("checking", filepath.name, "...")
+            label = classify_image(filepath)
