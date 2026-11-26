@@ -12,7 +12,7 @@ def load_corrections():
     embeddings = []
     labels = []
 
-    with open(log_file, "r") as f:
+    with open(log_file, "r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
 
         for row in reader:
