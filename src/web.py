@@ -43,3 +43,6 @@ class SortwiseApplication:
                 return {"error": "Linked or external files cannot be sorted."}
             paths.append(path)
         outcomes = [sorter.sort_file(path) for path in paths]
+        return {"outcomes": outcomes}
+
+
