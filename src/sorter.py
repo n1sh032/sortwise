@@ -77,7 +77,7 @@ def sort_file(filepath):
         return {"file": filepath.name, "status": "skipped", "message": "Temporary file"}
     try:
         if not wait_until_ready(filepath):
-            return
+            return {"file": filepath.name, "status": "skipped", "message": "File not ready"}
         with move_lock:
             method, label, folder_name = classify(filepath)
             dest = watch_folder / folder_name
