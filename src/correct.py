@@ -40,3 +40,5 @@ if __name__ == "__main__":
     shutil.move(str(filepath), str(dest / filename))
 
     log_decision(filename, "correction", old_folder, correct_folder)
+
+    print("moved", filename, "from", old_folder, "to", correct_folder)
