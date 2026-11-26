@@ -37,6 +37,8 @@ if __name__ == "__main__":
 
     filename = sys.argv[1]
     correct_folder = sys.argv[2]
+    if Path(correct_folder).name != correct_folder or correct_folder in {"", ".", ".."}:
+        sys.exit("choose a single destination folder name")
 
     filepath = find_file(filename)
 
