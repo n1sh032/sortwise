@@ -42,8 +42,6 @@ class SorterHandler(FileSystemEventHandler):
         dest = watch_folder / folder_name
         dest.mkdir(exist_ok=True)
 
-        time.sleep(1)   # wait a bit so the file finishes downloading first
-
         try:
             shutil.move(str(filepath), str(dest / filepath.name))
             print("moved", filepath.name, "->", folder_name)
