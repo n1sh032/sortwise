@@ -22,3 +22,9 @@ def read_pdf_text(filepath):
     for page in reader.pages:
         text += page.extract_text()
 
+    return text
+
+def classify_document(filepath):
+
+    text = read_pdf_text(filepath)
+
