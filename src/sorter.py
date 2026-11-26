@@ -88,6 +88,9 @@ def unique_destination(destination):
     index = 1
     while True:
         candidate = destination.with_name(f"{destination.stem} ({index}){destination.suffix}")
+        if not candidate.exists():
+            return candidate
+        index += 1
 
 class SorterHandler(FileSystemEventHandler):
 
