@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     print("found", len(X), "correction examples")
 
-    if len(X) < 5:
+    if len(X) < 5 or len(set(y)) < 2:
         print("not enough data yet, keep using correct.py when clip gets things wrong")
     else:
         clf = LogisticRegression(max_iter=1000)
