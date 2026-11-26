@@ -62,6 +62,8 @@ def sort_file(filepath):
     try:
         ext = filepath.suffix.lower()
         if ext in image_extensions:
+            from classifier import classify_image
+
             label = classify_image(filepath)
             folder_name = label_to_folder.get(label, "images")
             method = "clip"
