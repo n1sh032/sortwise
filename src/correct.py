@@ -53,6 +53,9 @@ if __name__ == "__main__":
 
     old_folder = filepath.parent.name
 
+    filename = filepath.name
+    if (dest / filename).exists():
+        sys.exit("destination already contains that filename")
     shutil.move(str(filepath), str(dest / filename))
 
     log_decision(filename, "correction", old_folder, correct_folder)
