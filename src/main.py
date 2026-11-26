@@ -13,3 +13,9 @@ def main():
     print("watching", watch_folder)
     print("press ctrl+c to stop")
 
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("stopping...")
+        obs.stop()
