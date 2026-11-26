@@ -15,7 +15,7 @@ of just watching tutorials without building anything.
 - every sort decision gets logged to sort_log.csv
 - if the model gets something wrong, correct.py lets you move it and logs
   the correction as training data. If the same filename is in multiple folders,
-  it lists the matching paths and asks you to use a unique filename.
+  it lists the matching paths. Pass a path like `receipts/report.pdf` to select one.
 - train.py can fit a classifier from corrections, but that model is experimental:
   the sorting workflow does not load or use it yet
 - corrupt/unreadable files and classifier errors are reported per file; the
