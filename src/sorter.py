@@ -71,22 +71,3 @@ class SorterHandler(FileSystemEventHandler):
         filepath = Path(event.src_path)
         time.sleep(1)
         sort_file(filepath)
-        if folder_name == None:
-            print("no rule for", ext, "-", filepath.name)
-            return
-
-        dest = watch_folder / folder_name
-        dest.mkdir(exist_ok=True)
-
-        try:
-            shutil.move(str(filepath), str(dest / filepath.name))
-            print("moved", filepath.name, "->", folder_name)
-        except Exception as e:
-            print("failed to move", filepath.name, e)
-        if ext in image_extensions:
-            label = classify_image(filepath)
-            folder_name = label_to_folder.get(label, "images")
-            log_decision(filepath.name, "clip", label, folder_name)
-        else:
-            folder_name = sorting_rules.get(ext)
-            log_decision(filepath.name, "rule", ext, folder_name)
