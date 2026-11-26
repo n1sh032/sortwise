@@ -3,46 +3,107 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Sortwise</title>
+    <title>Sortwise · A place for everything</title>
     <link rel="stylesheet" href="/style.css" />
     <script src="/app.js" defer></script>
   </head>
   <body>
+    <aside class="sidebar">
+      <a class="brand" href="#inbox"
+        ><span class="brand-icon" aria-hidden="true">s</span>sortwise</a
+      >
+      <p class="nav-heading">YOUR LIBRARY</p>
+      <nav aria-label="Library">
+        <a class="selected" href="#inbox"
+          ><span class="nav-icon" aria-hidden="true">▤</span>Folder inbox</a
+        ><a href="#activity"
+          ><span class="nav-icon" aria-hidden="true">◷</span>Recent activity</a
+        >
+      </nav>
+      <div class="sidebar-note">
+        <span class="local-symbol" aria-hidden="true">✦</span
+        ><strong>A calmer folder.</strong>
+        <p>Choose what to organize.<br />Keep the rest as it is.</p>
+      </div>
+    </aside>
     <main>
       <header>
-        <div class="logo">Sortwise</div>
-        <p id="connection">Connecting…</p>
+        <div class="breadcrumb">My computer <span>/</span> Folder inbox</div>
+        <span id="connection" class="connection">Connecting…</span>
       </header>
-      <h1>Give every file a place.</h1>
-      <p class="lead">
-        Inspect your folder, select the files you want to organize, then review
-        where they went.
-      </p>
-      <p id="status" role="status">Connecting…</p>
-      <div class="layout">
-        <section class="panel" aria-label="Workspace">
-          <p class="hint" id="folder">Loading folder…</p>
-          <div class="actions">
-            <button data-action id="scan">Refresh files</button
-            ><button data-action id="sort" class="secondary">
-              Sort selected files
-            </button>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">A PLACE FOR EVERYTHING</p>
+          <h1>Make room for<br />what matters.</h1>
+          <p>Your downloads, a little more organized.</p>
+        </div>
+        <div class="folder-art" aria-hidden="true">
+          <div class="paper back"></div>
+          <div class="paper front"></div>
+          <div class="folder-shape"></div>
+          <span class="art-star">✦</span>
+        </div>
+      </section>
+      <div class="category-guide" aria-label="Sorting methods">
+        <div>
+          <span class="category-icon images" aria-hidden="true">▧</span>
+          <div>
+            <strong>Images</strong><small>Organized by what’s inside</small>
           </div>
-          <p class="hint">
-            Images and PDFs use local models. The first classification may
-            download model weights.
-          </p>
-          <div id="files" class="files">
-            <p>Refresh to see files in your configured folder.</p>
+        </div>
+        <div>
+          <span class="category-icon documents" aria-hidden="true">▤</span>
+          <div>
+            <strong>Documents</strong><small>PDFs sorted by their text</small>
           </div>
-        </section>
-        <section class="panel">
-          <h2>Activity</h2>
-          <pre id="output" aria-live="polite">
-Select files to sort and their results will appear here.</pre
-          >
-        </section>
+        </div>
+        <div>
+          <span class="category-icon other" aria-hidden="true">▦</span>
+          <div>
+            <strong>Other files</strong
+            ><small>A home for every file type</small>
+          </div>
+        </div>
       </div>
+      <div class="workspace">
+        <section class="file-panel" id="inbox">
+          <div class="panel-header">
+            <div>
+              <h2>Folder inbox <span id="file-count">—</span></h2>
+              <p id="folder">Loading folder…</p>
+            </div>
+            <button data-action id="scan" class="refresh">Refresh</button>
+          </div>
+          <div class="list-heading">
+            <span>Select files to organize</span><span>FILE SIZE</span>
+          </div>
+          <div id="files" class="files">
+            <div class="empty">
+              <span aria-hidden="true">▤</span
+              ><strong>Let’s see what’s in here.</strong>
+              <p>Refresh your folder to choose files.</p>
+            </div>
+          </div>
+          <div class="file-footer">
+            <span>Moves stay in your chosen folder.</span
+            ><button data-action id="sort">Organize selected</button>
+          </div>
+        </section>
+        <aside class="activity-panel" id="activity">
+          <div class="activity-heading">
+            <h2>Recent activity</h2>
+            <span aria-hidden="true">◷</span>
+          </div>
+          <pre id="output" aria-live="polite">
+Select and organize files to see where they went.</pre
+          >
+          <div class="model-note">
+            Images and PDFs use local models. The first run may download their
+            weights.
+          </div>
+        </aside>
+      </div>
+      <p id="status" role="status">Connecting…</p>
     </main>
   </body>
 </html>
