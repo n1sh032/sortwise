@@ -27,7 +27,14 @@ class SorterHandler(FileSystemEventHandler):
         filepath = Path(event.src_path)
         ext = filepath.suffix.lower()
 
-        folder_name = sorting_rules.get(ext)
+        time.sleep(1)
+
+        if ext in image_extensions:
+            label = classify_image(filepath)
+            folder_name = label_to_folder.get(label, "images")
+        else:
+            folder_name = sorting_rules.get(ext)
+
         if folder_name == None:
             print("no rule for", ext, "-", filepath.name)
             return
