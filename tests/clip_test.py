@@ -16,3 +16,6 @@ labels = ["a screenshot", "a meme", "a receipt", "a photo of a person", "a docum
 inputs = processor(text=labels, images=img, return_tensors="pt", padding=True)
 outputs = model(**inputs)
 
+# this turns the raw scores into probabilities that add up to 1
+probs = outputs.logits_per_image.softmax(dim=1)
+
