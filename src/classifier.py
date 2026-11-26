@@ -25,3 +25,6 @@ def classify_image(filepath):
     probs = outputs.logits_per_image.softmax(dim=1)
 
     # find the label with the highest score
+    best_index = probs.argmax()
+    best_label = image_labels[best_index]
+
