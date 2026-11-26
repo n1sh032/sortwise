@@ -4,3 +4,9 @@ from pathlib import Path
 from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
+
+class SorterHandler(FileSystemEventHandler):
+
+    def on_created(self, event):
+        if event.is_directory:
+            return
