@@ -16,3 +16,9 @@ def load_corrections():
     with open(log_file, "r") as f:
         reader = csv.DictReader(f)
 
+        for row in reader:
+            if row["method"] == "correction":
+
+                filename = row["filename"]
+                correct_folder = row["folder"]
+
