@@ -12,7 +12,7 @@ def test_wait_until_ready_waits_for_repeated_stable_sizes(tmp_path, monkeypatch)
             return type("Stat", (), {"st_size": next(sizes)})()
     monkeypatch.setattr(sorter.time, "sleep", lambda _: None)
 
-    assert sorter.wait_until_ready(path, stable_checks=2) is True
+    assert sorter.wait_until_ready(Download(), stable_checks=2) is True
 
 
 def test_unique_destination_does_not_overwrite_existing_file(tmp_path):
