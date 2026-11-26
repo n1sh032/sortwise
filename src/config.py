@@ -1,7 +1,8 @@
 from pathlib import Path
 import os
 
-watch_folder = Path.home() / "Downloads"  # folder to watch
+project_root = Path(__file__).resolve().parents[1]
+watch_folder = Path(os.getenv("SORTWISE_FOLDER", str(Path.home() / "Downloads"))).expanduser()
 
 sorting_rules = {
     ".jpg": "images", ".jpeg": "images", ".png": "images", ".webp": "images", ".gif": "images",
