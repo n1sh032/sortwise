@@ -53,6 +53,9 @@ def sort_file(filepath):
         folder_name = sorting_rules.get(ext, "misc")
         log_decision(filepath.name, "rule", ext, folder_name)
 
+    dest = watch_folder / folder_name
+    dest.mkdir(exist_ok=True)
+
 class SorterHandler(FileSystemEventHandler):
 
     def on_created(self, event):
