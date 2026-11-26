@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 watch_folder = Path.home() / "Downloads"  # folder to watch
 
