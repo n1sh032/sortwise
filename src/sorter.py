@@ -99,5 +99,5 @@ class SorterHandler(FileSystemEventHandler):
             return
 
         filepath = Path(event.src_path)
-        time.sleep(1)
-        sort_file(filepath)
+        if wait_until_ready(filepath):
+            sort_file(filepath)
