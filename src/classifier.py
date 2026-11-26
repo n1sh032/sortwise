@@ -7,3 +7,12 @@ model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
 # these are the categories we sort images into
+# note: has to actually cover what youre expecting or it guesses wrong
+image_labels = [
+    "a screenshot",
+    "a meme",
+    "a receipt",
+    "a photo of a person",
+    "a document scan",
+    "a nature or landscape photo"
+]
