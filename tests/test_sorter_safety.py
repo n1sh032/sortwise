@@ -19,3 +19,9 @@ def test_unique_destination_does_not_overwrite_existing_file(tmp_path):
     (tmp_path / "report (1).pdf").touch()
 
     assert sorter.unique_destination(original).name == "report (2).pdf"
+
+
+def test_find_file_reports_duplicate_names(tmp_path, monkeypatch, capsys):
+    import correct
+
+    (tmp_path / "receipts").mkdir()
