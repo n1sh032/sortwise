@@ -41,6 +41,9 @@ def sort_file(filepath):
         label = classify_image(filepath)
         folder_name = label_to_folder.get(label, "images")
         log_decision(filepath.name, "clip", label, folder_name)
+
+    elif ext in pdf_extensions:
+        label = classify_document(filepath)
 class SorterHandler(FileSystemEventHandler):
 
     def on_created(self, event):
