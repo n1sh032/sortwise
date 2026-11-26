@@ -25,3 +25,6 @@ doc_label_to_folder = {
     "a form to fill out": "important"
 }
 
+def audit_folder(folder_path):
+
+    current_folder_name = folder_path.name
