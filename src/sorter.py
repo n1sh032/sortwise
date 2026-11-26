@@ -85,6 +85,9 @@ def sort_file(filepath):
 def unique_destination(destination):
     if not destination.exists():
         return destination
+    index = 1
+    while True:
+        candidate = destination.with_name(f"{destination.stem} ({index}){destination.suffix}")
 
 class SorterHandler(FileSystemEventHandler):
 
