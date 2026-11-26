@@ -47,6 +47,9 @@ def wait_until_ready(filepath, timeout=60, stable_checks=3, interval=1):
             stable = 0
             last_size = size
         time.sleep(interval)
+    print("skipping", filepath.name, "- download did not finish before timeout")
+    return False
+
 def sort_file(filepath):
 
     # skip temp/lock files that office apps create while a file is open
