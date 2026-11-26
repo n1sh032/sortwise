@@ -114,6 +114,9 @@ class SorterHandler(FileSystemEventHandler):
         with self.lock:
             if path in self.pending:
                 return
+            self.pending.add(path)
+        self.workers.submit(self.process, path)
+
 
     def on_created(self, event):
         if event.is_directory:
