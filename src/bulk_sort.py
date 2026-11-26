@@ -7,3 +7,5 @@ if __name__ == "__main__":
 
     print("found", len(files), "files to sort")
 
+    for filepath in files:
+        sort_file(filepath)
