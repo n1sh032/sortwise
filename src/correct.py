@@ -28,3 +28,6 @@ if __name__ == "__main__":
 
     filepath = find_file(filename)
 
+    if filepath == None:
+        print("couldnt find", filename, "in any sorted folder")
+        sys.exit()
