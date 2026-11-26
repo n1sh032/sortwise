@@ -13,3 +13,6 @@ img = Image.open(image_path)
 # clip doesnt need training examples, just descriptions
 labels = ["a screenshot", "a meme", "a receipt", "a photo of a person", "a document scan", "a nature or landscape photo"]
 
+inputs = processor(text=labels, images=img, return_tensors="pt", padding=True)
+outputs = model(**inputs)
+
