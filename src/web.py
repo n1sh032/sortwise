@@ -46,3 +46,6 @@ class SortwiseApplication:
         return {"outcomes": outcomes}
 
 
+def main():
+    from config import watch_folder
+
