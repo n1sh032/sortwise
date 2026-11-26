@@ -19,3 +19,6 @@ def main():
     except KeyboardInterrupt:
         print("stopping...")
         obs.stop()
+
+    obs.join()
+
