@@ -34,3 +34,6 @@ def classify_document(filepath):
 
     if text.strip() == "":
         return "an important document"   # cant read it, play it safe
+
+    result = text_classifier(text, doc_labels)
+    best_label = result["labels"][0]
