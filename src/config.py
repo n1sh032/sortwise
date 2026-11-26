@@ -9,6 +9,7 @@ sorting_rules = {
 
     ".mp3": "audio",
 
-    ".exe": "installers",
-    ".msi":"installers"
+    ".pdf": "documents", ".docx": "documents", ".doc": "documents",
+    ".pptx": "documents", ".pptm": "documents", ".xlsx": "documents",
+    ".csv": "documents", ".html": "documents",
 }
