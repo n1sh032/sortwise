@@ -6,9 +6,9 @@ sorting_rules = {
     ".jpg": "images", ".jpeg": "images", ".png": "images", ".webp": "images", ".gif": "images",
 
     ".mp4": "videos", ".webm": "videos",
-    ".pdf": "documents",
-    ".docx" : "documents",
-    ".zip": "archives",
+
+    ".mp3": "audio",
+
     ".exe": "installers",
     ".msi":"installers"
 }
