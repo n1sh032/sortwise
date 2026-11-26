@@ -31,3 +31,6 @@ if __name__ == "__main__":
     if filepath == None:
         print("couldnt find", filename, "in any sorted folder")
         sys.exit()
+
+    dest = watch_folder / correct_folder
+    dest.mkdir(exist_ok=True)
