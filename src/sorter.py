@@ -129,7 +129,7 @@ class SorterHandler(FileSystemEventHandler):
             return
 
         filepath = Path(event.src_path)
-        sort_file(filepath)
+        self.submit(filepath)
 
     def on_moved(self, event):
         path = Path(event.dest_path)
