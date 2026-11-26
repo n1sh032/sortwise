@@ -6,6 +6,9 @@ from config import watch_folder
 from logger import log_decision
 
 def find_file(filename):
+    selected = Path(filename)
+    if len(selected.parts) == 2 and not selected.anchor and ".." not in selected.parts:
+        path = watch_folder / selected
 
     # looks through all the subfolders inside watch_folder
     # since we dont know which folder clip put it in
