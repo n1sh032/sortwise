@@ -13,3 +13,6 @@ def test_browser_moves_selected_file_and_reports_result(tmp_path, monkeypatch):
 
     (tmp_path / "first.txt").write_text("sort me")
     (tmp_path / "second.txt").write_text("leave me")
+    monkeypatch.setattr(logger, "log_file", tmp_path / "log.csv")
+    monkeypatch.setattr(sorter, "wait_until_ready", lambda path: True)
+    monkeypatch.setattr(sorter, "watch_folder", tmp_path)
