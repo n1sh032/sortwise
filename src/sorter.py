@@ -108,6 +108,12 @@ class SorterHandler(FileSystemEventHandler):
     def __init__(self):
         self.workers = ThreadPoolExecutor(max_workers=4)
         self.pending = set()
+        self.lock = Lock()
+
+    def submit(self, path):
+        with self.lock:
+            if path in self.pending:
+                return
 
     def on_created(self, event):
         if event.is_directory:
