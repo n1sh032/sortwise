@@ -10,3 +10,6 @@ class SorterHandler(FileSystemEventHandler):
     def on_created(self, event):
         if event.is_directory:
             return
+
+        filepath = Path(event.src_path)
+        ext = filepath.suffix.lower()
