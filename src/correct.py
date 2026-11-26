@@ -37,3 +37,6 @@ if __name__ == "__main__":
 
     old_folder = filepath.parent.name
 
+    shutil.move(str(filepath), str(dest / filename))
+
+    log_decision(filename, "correction", old_folder, correct_folder)
