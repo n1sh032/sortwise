@@ -100,7 +100,7 @@ def sort_file(filepath):
 
 
 def unique_destination(destination):
-    if not destination.exists():
+    if not destination.exists() and not destination.is_symlink():
         return destination
     index = 1
     while True:
