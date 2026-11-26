@@ -19,3 +19,6 @@ def test_browser_moves_selected_file_and_reports_result(tmp_path, monkeypatch):
     app = SortwiseApplication(tmp_path)
     assert app.execute("scan", {})["total"] == 2
     result = app.execute("sort", {"names": ["first.txt"]})
+    assert result["outcomes"][0]["status"] == "moved"
+    assert (tmp_path / "misc" / "first.txt").read_text() == "sort me"
+    assert (tmp_path / "second.txt").exists()
