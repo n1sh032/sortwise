@@ -22,3 +22,6 @@ def classify_image(filepath):
     img = Image.open(filepath)
     inputs = processor(text=image_labels, images=img, return_tensors="pt", padding=True)
     outputs = model(**inputs)
+    probs = outputs.logits_per_image.softmax(dim=1)
+
+    # find the label with the highest score
