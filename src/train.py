@@ -7,3 +7,9 @@ from config import watch_folder
 from classifier import get_embedding
 
 log_file = Path("sort_log.csv")
+
+def load_corrections():
+
+    embeddings = []
+    labels = []
+
