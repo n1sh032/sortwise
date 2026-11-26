@@ -21,4 +21,5 @@ sorting_rules = {
 
     ".srt": "subtitles", ".vtt": "subtitles", ".lrc": "subtitles",
 
+    ".schem": "minecraft", ".schematic": "minecraft", ".litematic": "minecraft",
 }
