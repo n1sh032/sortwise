@@ -69,8 +69,6 @@ class SorterHandler(FileSystemEventHandler):
             return
 
         filepath = Path(event.src_path)
-        ext = filepath.suffix.lower()
-
         time.sleep(1)
 
         if ext in image_extensions:
