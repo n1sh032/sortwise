@@ -101,6 +101,7 @@ def sort_file(filepath):
         return {"file": filepath.name, "status": "moved", "destination": str(destination)}
     except Exception as e:
         print("failed to classify or move", filepath.name, "-", e)
+        return {"file": filepath.name, "status": "error", "message": str(e)}
 
 
 def unique_destination(destination):
