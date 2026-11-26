@@ -18,4 +18,7 @@ sorting_rules = {
     ".zip": "archives", ".rar": "archives", ".jar": "archives",
 
     ".exe": "installers", ".msi": "installers", ".msix": "installers",
+
+    ".srt": "subtitles", ".vtt": "subtitles", ".lrc": "subtitles",
+
 }
