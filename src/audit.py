@@ -34,3 +34,6 @@ def audit_folder(folder_path):
 
         if filepath.is_dir():
             continue
+
+        ext = filepath.suffix.lower()
+
