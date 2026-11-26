@@ -3,15 +3,6 @@ from pathlib import Path
 
 from sorter import classify, image_extensions, pdf_extensions
 
-label_to_folder = {
-    "a screenshot": "screenshots",
-    "a meme": "memes",
-    "a receipt": "receipts",
-    "a photo of a person": "photos",
-    "a document scan": "documents",
-    "a nature or landscape photo": "photos"
-}
-
 doc_label_to_folder = {
     "a receipt": "receipts",
     "an important document": "important",
