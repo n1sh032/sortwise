@@ -35,6 +35,12 @@ def sort_file(filepath):
     if filepath.name.startswith("~$"):
         return
 
+    ext = filepath.suffix.lower()
+
+    if ext in image_extensions:
+        label = classify_image(filepath)
+        folder_name = label_to_folder.get(label, "images")
+        log_decision(filepath.name, "clip", label, folder_name)
 class SorterHandler(FileSystemEventHandler):
 
     def on_created(self, event):
