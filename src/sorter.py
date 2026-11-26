@@ -5,6 +5,8 @@ from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
 from classifier import classify_image
+from doc_classifier import classify_document
+from logger import log_decision
 
 image_extensions = [".jpg", ".jpeg", ".png"]
 
