@@ -34,3 +34,6 @@ def get_embedding(filepath):
 
     img = Image.open(filepath)
     inputs = processor(images=img, return_tensors="pt")
+
+    image_features = model.get_image_features(pixel_values=inputs["pixel_values"])
+
