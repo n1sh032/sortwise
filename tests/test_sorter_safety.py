@@ -10,6 +10,9 @@ def test_move_does_not_replace_existing_destination(tmp_path):
     destination = tmp_path / "destination.txt"
     source.write_text("source")
     destination.write_text("destination")
+    with pytest.raises(FileExistsError):
+        move_without_overwrite(source, destination)
+    assert source.read_text() == "source"
 
 
 def test_wait_until_ready_waits_for_repeated_stable_sizes(tmp_path, monkeypatch):
