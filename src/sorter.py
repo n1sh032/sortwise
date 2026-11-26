@@ -8,6 +8,8 @@ from watchdog.events import FileSystemEventHandler
 from config import watch_folder, sorting_rules
 from logger import log_decision
 
+move_lock = Lock()
+
 image_extensions = [".jpg", ".jpeg", ".png"]
 pdf_extensions = [".pdf"]
 
