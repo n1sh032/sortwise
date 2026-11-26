@@ -9,6 +9,9 @@ def find_file(filename):
     selected = Path(filename)
     if len(selected.parts) == 2 and not selected.anchor and ".." not in selected.parts:
         path = watch_folder / selected
+        return path if path.is_file() and path.resolve().is_relative_to(watch_folder.resolve()) else None
+    if len(selected.parts) != 1 or selected.anchor or selected.name in {"", ".."}:
+        return None
 
     # looks through all the subfolders inside watch_folder
     # since we dont know which folder clip put it in
