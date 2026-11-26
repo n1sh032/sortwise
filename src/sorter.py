@@ -79,7 +79,9 @@ def sort_file(filepath):
         log_decision(destination.name, method, label, folder_name)
         print("moved", filepath.name, "->", folder_name)
     except Exception as e:
-        print("failed to move", filepath.name, e)
+        print("failed to classify or move", filepath.name, "-", e)
+
+
 
 class SorterHandler(FileSystemEventHandler):
 
