@@ -32,7 +32,7 @@ def find_file(filename):
 if __name__ == "__main__":
 
     if len(sys.argv) != 3:
-        print("usage: python correct.py filename correct_folder")
+        print("usage: python src/correct.py filename-or-folder/filename correct_folder")
         sys.exit()
 
     filename = sys.argv[1]
