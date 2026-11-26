@@ -19,27 +19,8 @@ def audit_folder(folder_path):
     return flagged
 
 
-    for filepath in folder_path.iterdir():
-
-        if filepath.is_dir():
-            continue
-
-        ext = filepath.suffix.lower()
-
-        if ext in image_extensions:
-            print("checking", filepath.name, "...")
-            label = classify_image(filepath)
-            expected_folder = label_to_folder.get(label, "images")
-
-        elif ext in pdf_extensions:
-            print("checking", filepath.name, "(this can take a while)...")
-            label = classify_document(filepath)
-            expected_folder = doc_label_to_folder.get(label, "documents")
-
-        else:
-            continue
-
-        if expected_folder != current_folder_name:
-            flagged.append((filepath.name, current_folder_name, expected_folder))
-
-    return flagged
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Review file classifications without moving anything")
+    parser.add_argument("folder", type=Path)
+    for name, current, expected in audit_folder(parser.parse_args().folder):
+        print(f"{name}: {current} -> {expected}")
