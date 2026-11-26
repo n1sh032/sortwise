@@ -19,3 +19,5 @@ outputs = model(**inputs)
 # this turns the raw scores into probabilities that add up to 1
 probs = outputs.logits_per_image.softmax(dim=1)
 
+for label, prob in zip(labels, probs[0]):
+    print(label, "-", round(prob.item()*100, 2), "%")
