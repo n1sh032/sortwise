@@ -56,6 +56,12 @@ def sort_file(filepath):
     dest = watch_folder / folder_name
     dest.mkdir(exist_ok=True)
 
+    try:
+        shutil.move(str(filepath), str(dest / filepath.name))
+        print("moved", filepath.name, "->", folder_name)
+    except Exception as e:
+        print("failed to move", filepath.name, e)
+
 class SorterHandler(FileSystemEventHandler):
 
     def on_created(self, event):
