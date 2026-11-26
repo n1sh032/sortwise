@@ -7,3 +7,6 @@ def test_browser_rejects_files_outside_folder(tmp_path):
         assert "error" in app.execute("sort", {"names": names})
 
 
+def test_browser_moves_selected_file_and_reports_result(tmp_path, monkeypatch):
+    import logger
+    import sorter
