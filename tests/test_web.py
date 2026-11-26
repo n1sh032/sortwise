@@ -10,3 +10,6 @@ def test_browser_rejects_files_outside_folder(tmp_path):
 def test_browser_moves_selected_file_and_reports_result(tmp_path, monkeypatch):
     import logger
     import sorter
+
+    (tmp_path / "first.txt").write_text("sort me")
+    (tmp_path / "second.txt").write_text("leave me")
