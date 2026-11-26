@@ -52,3 +52,5 @@ def audit_folder(folder_path):
 
         if expected_folder != current_folder_name:
             flagged.append((filepath.name, current_folder_name, expected_folder))
+
+    return flagged
