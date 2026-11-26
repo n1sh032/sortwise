@@ -48,3 +48,5 @@ class SorterHandler(FileSystemEventHandler):
             print("moved", filepath.name, "->", folder_name)
         except Exception as e:
             print("failed to move", filepath.name, e)
+        if ext in image_extensions:
+            label = classify_image(filepath)
