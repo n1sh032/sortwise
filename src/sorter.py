@@ -105,7 +105,7 @@ def unique_destination(destination):
     index = 1
     while True:
         candidate = destination.with_name(f"{destination.stem} ({index}){destination.suffix}")
-        if not candidate.exists():
+        if not candidate.exists() and not candidate.is_symlink():
             return candidate
         index += 1
 
