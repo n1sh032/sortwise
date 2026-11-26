@@ -76,21 +76,19 @@ def sort_file(filepath):
     }:
         return
     try:
-        ext = filepath.suffix.lower()
-        if ext in image_extensions:
-            from classifier import classify_image
-
-            label = classify_image(filepath)
-            folder_name = label_to_folder.get(label, "images")
-            method = "clip"
-        elif ext in pdf_extensions:
-            from doc_classifier import classify_document
-
-            label = classify_document(filepath)
-            folder_name = doc_label_to_folder.get(label, "documents")
-            method = "doc_clip"
-        else:
-            label = ext
+        if not wait_until_ready(filepath):
+            return
+        with move_lock:
+            method, label, folder_name = classify(filepath)
+            dest = watch_folder / folder_name
+            dest.mkdir(exist_ok=True)
+            destination = unique_destination(dest / filepath.name)
+            shutil.move(str(filepath), str(destination))
+            try:
+                log_decision(destination.name, method, label, folder_name)
+            except OSError as e:
+                print("moved", destination, "but could not write the log:", e)
+                return
             folder_name = sorting_rules.get(ext, "misc")
             method = "rule"
 
