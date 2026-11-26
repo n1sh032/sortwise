@@ -52,7 +52,9 @@ def wait_until_ready(filepath, timeout=60, stable_checks=3, interval=1):
 def sort_file(filepath):
 
     # skip temp/lock files that office apps create while a file is open
-    if filepath.name.startswith("~$"):
+    if filepath.name.startswith("~$") or filepath.suffix.lower() in {
+        ".part", ".crdownload", ".download", ".tmp",
+    }:
         return
 
     try:
