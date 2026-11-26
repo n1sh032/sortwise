@@ -16,3 +16,6 @@ def test_wait_until_ready_waits_for_repeated_stable_sizes(tmp_path, monkeypatch)
 def test_unique_destination_does_not_overwrite_existing_file(tmp_path):
     original = tmp_path / "report.pdf"
     original.touch()
+    (tmp_path / "report (1).pdf").touch()
+
+    assert sorter.unique_destination(original).name == "report (2).pdf"
