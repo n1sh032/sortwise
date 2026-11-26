@@ -10,3 +10,6 @@ def test_wait_until_ready_waits_for_repeated_stable_sizes(tmp_path, monkeypatch)
     monkeypatch.setattr(sorter.Path, "stat", lambda self: type("Stat", (), {"st_size": next(sizes)})())
     monkeypatch.setattr(sorter.time, "sleep", lambda _: None)
 
+    assert sorter.wait_until_ready(path, stable_checks=2) is True
+
+
