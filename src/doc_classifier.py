@@ -13,3 +13,9 @@ doc_labels = [
     "an article or blog post",
     "a form to fill out"
 ]
+
+def read_pdf_text(filepath):
+
+    reader = PdfReader(filepath)
+    text = ""
+
