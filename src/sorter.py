@@ -53,6 +53,12 @@ def wait_until_ready(filepath, timeout=60, stable_checks=3, interval=1):
     return False
 
 
+def classify(filepath):
+    ext = filepath.suffix.lower()
+    if ext in image_extensions:
+        from classifier import classify_image
+
+        label = classify_image(filepath)
 def sort_file(filepath):
 
     # skip temp/lock files that office apps create while a file is open
