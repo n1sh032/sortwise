@@ -10,3 +10,6 @@ def main():
     obs.schedule(handler, str(watch_folder), recursive=False)
     obs.start()
 
+    print("watching", watch_folder)
+    print("press ctrl+c to stop")
+
