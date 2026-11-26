@@ -16,3 +16,6 @@ def test_browser_moves_selected_file_and_reports_result(tmp_path, monkeypatch):
     monkeypatch.setattr(logger, "log_file", tmp_path / "log.csv")
     monkeypatch.setattr(sorter, "wait_until_ready", lambda path: True)
     monkeypatch.setattr(sorter, "watch_folder", tmp_path)
+    app = SortwiseApplication(tmp_path)
+    assert app.execute("scan", {})["total"] == 2
+    result = app.execute("sort", {"names": ["first.txt"]})
