@@ -47,6 +47,8 @@ if __name__ == "__main__":
         sys.exit()
 
     dest = watch_folder / correct_folder
+    if not dest.resolve().is_relative_to(watch_folder.resolve()):
+        sys.exit("destination must be inside Downloads")
     dest.mkdir(exist_ok=True)
 
     old_folder = filepath.parent.name
