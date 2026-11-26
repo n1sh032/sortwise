@@ -22,3 +22,6 @@ def load_corrections():
                 filename = row["filename"]
                 correct_folder = row["folder"]
 
+                # need to find the file again since it moved after the correction
+                filepath = watch_folder / correct_folder / filename
+
