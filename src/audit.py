@@ -5,6 +5,15 @@ from sorter import classify, image_extensions, pdf_extensions
 
 
 def audit_folder(folder_path):
+    flagged = []
+    for filepath in folder_path.iterdir():
+        if not filepath.is_file() or filepath.suffix.lower() not in image_extensions + pdf_extensions:
+            continue
+        try:
+            _, _, expected = classify(filepath)
+        except Exception as exc:
+            print("could not classify", filepath.name, "-", exc)
+            continue
 
     current_folder_name = folder_path.name
     flagged = []
