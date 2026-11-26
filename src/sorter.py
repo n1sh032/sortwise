@@ -81,6 +81,8 @@ def sort_file(filepath):
         with move_lock:
             method, label, folder_name = classify(filepath)
             dest = watch_folder / folder_name
+            if dest.is_symlink() or not dest.resolve().is_relative_to(watch_folder.resolve()):
+                raise ValueError("Category folder must stay inside the watch folder")
             dest.mkdir(exist_ok=True)
             while True:
                 destination = unique_destination(dest / filepath.name)
