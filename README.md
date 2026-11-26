@@ -56,6 +56,10 @@ file size (up to 60 seconds). This is a practical download-completion heuristic,
 not a guarantee for every sync client. Failed classification leaves the file
 in Downloads for manual review.
 
+Moves use a filesystem hard link to reserve the new name without overwriting
+another file. The source and destination must be on the same volume and the
+filesystem must support hard links (for example, NTFS).
+
 to sort everything already sitting in downloads:
 
 python src/bulk_sort.py
