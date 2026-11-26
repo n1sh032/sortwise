@@ -14,7 +14,7 @@ def find_file(filename):
         if folder.is_dir():
             possible_path = folder / filename
             if possible_path.exists():
-                return possible_path
+                matches.append(possible_path)
 
     return None
 
