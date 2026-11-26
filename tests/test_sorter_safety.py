@@ -28,3 +28,6 @@ def test_find_file_reports_duplicate_names(tmp_path, monkeypatch, capsys):
     (tmp_path / "documents").mkdir()
     (tmp_path / "receipts" / "same.pdf").touch()
     (tmp_path / "documents" / "same.pdf").touch()
+    monkeypatch.setattr(correct, "watch_folder", tmp_path)
+
+    assert correct.find_file("same.pdf") is None
