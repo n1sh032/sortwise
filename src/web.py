@@ -52,3 +52,12 @@ def main():
     parser = argparse.ArgumentParser(description="Sortwise folder dashboard")
     parser.add_argument("--folder", type=Path, default=watch_folder)
     parser.add_argument("--port", type=int, default=8012)
+    args = parser.parse_args()
+    serve(
+        SortwiseApplication(args.folder),
+        Path(__file__).resolve().parents[1] / "web",
+        "sortwise",
+        args.port,
+    )
+
+
