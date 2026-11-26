@@ -10,3 +10,6 @@ def log_decision(filename, method, label, folder):
 
     with open(log_file, "a", newline="") as f:
         writer = csv.writer(f)
+
+        if not file_exists:
+            writer.writerow(["time", "filename", "method", "label", "folder"])
