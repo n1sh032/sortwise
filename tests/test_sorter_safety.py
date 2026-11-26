@@ -25,3 +25,6 @@ def test_find_file_reports_duplicate_names(tmp_path, monkeypatch, capsys):
     import correct
 
     (tmp_path / "receipts").mkdir()
+    (tmp_path / "documents").mkdir()
+    (tmp_path / "receipts" / "same.pdf").touch()
+    (tmp_path / "documents" / "same.pdf").touch()
