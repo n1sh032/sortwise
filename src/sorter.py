@@ -62,6 +62,9 @@ def classify(filepath):
         return "clip", label, label_to_folder.get(label, "images")
     if ext in pdf_extensions:
         from doc_classifier import classify_document
+
+        label = classify_document(filepath)
+        return "doc_clip", label, doc_label_to_folder.get(label, "documents")
 def sort_file(filepath):
 
     # skip temp/lock files that office apps create while a file is open
