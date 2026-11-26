@@ -7,3 +7,6 @@ log_file = Path("sort_log.csv")
 def log_decision(filename, method, label, folder):
 
     file_exists = log_file.exists()
+
+    with open(log_file, "a", newline="") as f:
+        writer = csv.writer(f)
