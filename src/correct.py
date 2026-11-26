@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 from config import watch_folder
+from file_move import move_without_overwrite
 from logger import log_decision
 
 def find_file(filename):
