@@ -18,8 +18,6 @@ def audit_folder(folder_path):
             flagged.append((filepath.name, folder_path.name, expected))
     return flagged
 
-    current_folder_name = folder_path.name
-    flagged = []
 
     for filepath in folder_path.iterdir():
 
