@@ -16,7 +16,12 @@ def find_file(filename):
             if possible_path.exists():
                 matches.append(possible_path)
 
-    return None
+    if len(matches) > 1:
+        print("ambiguous filename; found:")
+        for match in matches:
+            print(" -", match.relative_to(watch_folder))
+        return None
+    return matches[0] if matches else None
 
 if __name__ == "__main__":
 
