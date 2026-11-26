@@ -105,5 +105,9 @@ class SorterHandler(FileSystemEventHandler):
             return
 
         filepath = Path(event.src_path)
-        if wait_until_ready(filepath):
-            sort_file(filepath)
+        sort_file(filepath)
+
+    def on_moved(self, event):
+        path = Path(event.dest_path)
+        if not event.is_directory and path.parent.resolve() == watch_folder.resolve():
+            sort_file(path)
