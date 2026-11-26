@@ -29,6 +29,12 @@ doc_label_to_folder = {
     "a form to fill out": "important"
 }
 
+def sort_file(filepath):
+
+    # skip temp/lock files that office apps create while a file is open
+    if filepath.name.startswith("~$"):
+        return
+
 class SorterHandler(FileSystemEventHandler):
 
     def on_created(self, event):
