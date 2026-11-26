@@ -13,3 +13,5 @@ def log_decision(filename, method, label, folder):
 
         if not file_exists:
             writer.writerow(["time", "filename", "method", "label", "folder"])
+
+        writer.writerow([datetime.now(), filename, method, label, folder])
