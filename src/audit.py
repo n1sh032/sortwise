@@ -46,3 +46,6 @@ def audit_folder(folder_path):
             print("checking", filepath.name, "(this can take a while)...")
             label = classify_document(filepath)
             expected_folder = doc_label_to_folder.get(label, "documents")
+
+        else:
+            continue
