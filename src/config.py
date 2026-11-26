@@ -12,4 +12,7 @@ sorting_rules = {
     ".pdf": "documents", ".docx": "documents", ".doc": "documents",
     ".pptx": "documents", ".pptm": "documents", ".xlsx": "documents",
     ".csv": "documents", ".html": "documents",
+
+    ".py": "code", ".c": "code",
+
 }
