@@ -16,3 +16,9 @@ def find_file(filename):
                 return possible_path
 
     return None
+
+if __name__ == "__main__":
+
+    if len(sys.argv) != 3:
+        print("usage: python correct.py filename correct_folder")
+        sys.exit()
