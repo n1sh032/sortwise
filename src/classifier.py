@@ -16,3 +16,9 @@ image_labels = [
     "a document scan",
     "a nature or landscape photo"
 ]
+
+def classify_image(filepath):
+
+    img = Image.open(filepath)
+    inputs = processor(text=image_labels, images=img, return_tensors="pt", padding=True)
+    outputs = model(**inputs)
