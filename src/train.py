@@ -27,6 +27,12 @@ def load_corrections():
                 if filepath.suffix.lower() not in {".jpg", ".jpeg", ".png"}:
                     continue
                 if filepath.is_file():
+                    try:
+                        from classifier import get_embedding
+
+                        emb = get_embedding(filepath)
+                    except Exception as exc:
+                        print("skipping", filename, "-", exc)
                     embeddings.append(emb)
                     labels.append(correct_folder)
                 else:
