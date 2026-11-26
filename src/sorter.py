@@ -8,6 +8,16 @@ from classifier import classify_image
 
 image_extensions = [".jpg", ".jpeg", ".png"]
 
+# clip labels dont match folder names exactly, so we need this
+label_to_folder = {
+    "a screenshot": "screenshots",
+    "a meme": "memes",
+    "a receipt": "receipts",
+    "a photo of a person": "photos",
+    "a document scan": "documents",
+    "a nature or landscape photo": "photos"
+}
+
 class SorterHandler(FileSystemEventHandler):
 
     def on_created(self, event):
