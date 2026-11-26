@@ -28,3 +28,4 @@ def classify_image(filepath):
     best_index = probs.argmax()
     best_label = image_labels[best_index]
 
+    return best_label
