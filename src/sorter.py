@@ -105,6 +105,9 @@ def unique_destination(destination):
         index += 1
 
 class SorterHandler(FileSystemEventHandler):
+    def __init__(self):
+        self.workers = ThreadPoolExecutor(max_workers=4)
+        self.pending = set()
 
     def on_created(self, event):
         if event.is_directory:
