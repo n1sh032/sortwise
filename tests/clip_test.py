@@ -10,3 +10,6 @@ image_path = "test_image.png"
 img = Image.open(image_path)
 
 # these are the categories we're checking against
+# clip doesnt need training examples, just descriptions
+labels = ["a screenshot", "a meme", "a receipt", "a photo of a person", "a document scan", "a nature or landscape photo"]
+
