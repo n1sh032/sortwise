@@ -34,3 +34,6 @@ if __name__ == "__main__":
 
     dest = watch_folder / correct_folder
     dest.mkdir(exist_ok=True)
+
+    old_folder = filepath.parent.name
+
