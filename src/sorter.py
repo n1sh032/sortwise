@@ -74,7 +74,7 @@ def sort_file(filepath):
     if filepath.name.startswith("~$") or filepath.suffix.lower() in {
         ".part", ".crdownload", ".download", ".tmp",
     }:
-        return
+        return {"file": filepath.name, "status": "skipped", "message": "Temporary file"}
     try:
         if not wait_until_ready(filepath):
             return
