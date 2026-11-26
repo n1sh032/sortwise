@@ -9,6 +9,7 @@ from doc_classifier import classify_document
 from logger import log_decision
 
 image_extensions = [".jpg", ".jpeg", ".png"]
+pdf_extensions = [".pdf"]
 
 # clip labels dont match folder names exactly, so we need this
 label_to_folder = {
