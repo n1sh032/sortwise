@@ -37,3 +37,5 @@ def classify_document(filepath):
 
     result = text_classifier(text, doc_labels)
     best_label = result["labels"][0]
+
+    return best_label
