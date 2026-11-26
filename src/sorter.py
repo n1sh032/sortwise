@@ -4,6 +4,9 @@ from pathlib import Path
 from watchdog.events import FileSystemEventHandler
 
 from config import watch_folder, sorting_rules
+from classifier import classify_image
+
+image_extensions = [".jpg", ".jpeg", ".png"]
 
 class SorterHandler(FileSystemEventHandler):
 
