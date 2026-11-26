@@ -16,6 +16,9 @@ def test_move_does_not_replace_existing_destination(tmp_path):
     assert destination.read_text() == "destination"
 
     destination.unlink()
+    move_without_overwrite(source, destination)
+    assert not source.exists()
+    assert destination.read_text() == "source"
 
 
 def test_wait_until_ready_waits_for_repeated_stable_sizes(tmp_path, monkeypatch):
