@@ -33,6 +33,7 @@ def load_corrections():
                         emb = get_embedding(filepath)
                     except Exception as exc:
                         print("skipping", filename, "-", exc)
+                        continue
                     embeddings.append(emb)
                     labels.append(correct_folder)
                 else:
