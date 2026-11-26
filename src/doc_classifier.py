@@ -28,3 +28,6 @@ def classify_document(filepath):
 
     text = read_pdf_text(filepath)
 
+    # only using the first 1000 characters, the model has a limit anyway
+    # and the first chunk is usually enough to tell what it is
+    text = text[:1000]
