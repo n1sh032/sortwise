@@ -25,3 +25,6 @@ def load_corrections():
                 # need to find the file again since it moved after the correction
                 filepath = watch_folder / correct_folder / filename
 
+                if filepath.exists():
+                    emb = get_embedding(filepath)
+                    embeddings.append(emb)
