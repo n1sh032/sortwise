@@ -29,3 +29,8 @@ def classify_image(filepath):
     best_label = image_labels[best_index]
 
     return best_label
+
+def get_embedding(filepath):
+
+    img = Image.open(filepath)
+    inputs = processor(images=img, return_tensors="pt")
