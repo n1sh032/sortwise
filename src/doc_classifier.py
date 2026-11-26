@@ -31,3 +31,6 @@ def classify_document(filepath):
     # only using the first 1000 characters, the model has a limit anyway
     # and the first chunk is usually enough to tell what it is
     text = text[:1000]
+
+    if text.strip() == "":
+        return "an important document"   # cant read it, play it safe
