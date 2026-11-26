@@ -28,3 +28,9 @@ doc_label_to_folder = {
 def audit_folder(folder_path):
 
     current_folder_name = folder_path.name
+    flagged = []
+
+    for filepath in folder_path.iterdir():
+
+        if filepath.is_dir():
+            continue
