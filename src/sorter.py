@@ -20,6 +20,15 @@ label_to_folder = {
     "a nature or landscape photo": "photos"
 }
 
+doc_label_to_folder = {
+    "a receipt": "receipts",
+    "an important document": "important",
+    "a resume": "important",
+    "a manual or instructions": "documents",
+    "an article or blog post": "documents",
+    "a form to fill out": "important"
+}
+
 class SorterHandler(FileSystemEventHandler):
 
     def on_created(self, event):
