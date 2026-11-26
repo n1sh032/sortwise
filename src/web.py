@@ -49,3 +49,6 @@ class SortwiseApplication:
 def main():
     from config import watch_folder
 
+    parser = argparse.ArgumentParser(description="Sortwise folder dashboard")
+    parser.add_argument("--folder", type=Path, default=watch_folder)
+    parser.add_argument("--port", type=int, default=8012)
