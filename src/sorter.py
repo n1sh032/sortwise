@@ -117,6 +117,12 @@ class SorterHandler(FileSystemEventHandler):
             self.pending.add(path)
         self.workers.submit(self.process, path)
 
+    def process(self, path):
+        try:
+            sort_file(path)
+        finally:
+            with self.lock:
+                self.pending.discard(path)
 
     def on_created(self, event):
         if event.is_directory:
